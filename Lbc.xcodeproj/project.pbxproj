@@ -14,6 +14,7 @@
 		3789232D2A6AF9A600EE518F /* LbcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789232C2A6AF9A600EE518F /* LbcTests.swift */; };
 		378923372A6AF9A600EE518F /* LbcUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378923362A6AF9A600EE518F /* LbcUITests.swift */; };
 		378923392A6AF9A600EE518F /* LbcUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378923382A6AF9A600EE518F /* LbcUITestsLaunchTests.swift */; };
+		378923482A6B03AC00EE518F /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 378923472A6B03AC00EE518F /* Domain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		378923322A6AF9A600EE518F /* LbcUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LbcUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		378923362A6AF9A600EE518F /* LbcUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LbcUITests.swift; sourceTree = "<group>"; };
 		378923382A6AF9A600EE518F /* LbcUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LbcUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		378923452A6B02E300EE518F /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				378923482A6B03AC00EE518F /* Domain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,10 +78,12 @@
 		3789230E2A6AF9A400EE518F = {
 			isa = PBXGroup;
 			children = (
+				378923452A6B02E300EE518F /* Domain */,
 				378923192A6AF9A400EE518F /* Lbc */,
 				3789232B2A6AF9A600EE518F /* LbcTests */,
 				378923352A6AF9A600EE518F /* LbcUITests */,
 				378923182A6AF9A400EE518F /* Products */,
+				378923462A6B03AC00EE518F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +134,13 @@
 			path = LbcUITests;
 			sourceTree = "<group>";
 		};
+		378923462A6B03AC00EE518F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,6 +157,9 @@
 			dependencies = (
 			);
 			name = Lbc;
+			packageProductDependencies = (
+				378923472A6B03AC00EE518F /* Domain */,
+			);
 			productName = Lbc;
 			productReference = 378923172A6AF9A400EE518F /* Lbc.app */;
 			productType = "com.apple.product-type.application";
@@ -429,7 +444,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
@@ -467,7 +482,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
@@ -612,6 +627,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		378923472A6B03AC00EE518F /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3789230F2A6AF9A400EE518F /* Project object */;
 }
