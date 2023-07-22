@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 3722DDD22A6BF92B00DE8EC0 /* Data */; };
 		3789231B2A6AF9A400EE518F /* LbcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789231A2A6AF9A400EE518F /* LbcApp.swift */; };
 		3789231D2A6AF9A400EE518F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789231C2A6AF9A400EE518F /* ContentView.swift */; };
 		3789231F2A6AF9A600EE518F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3789231E2A6AF9A600EE518F /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		378923362A6AF9A600EE518F /* LbcUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LbcUITests.swift; sourceTree = "<group>"; };
 		378923382A6AF9A600EE518F /* LbcUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LbcUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		378923452A6B02E300EE518F /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		378923492A6B3CD300EE518F /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */,
 				378923482A6B03AC00EE518F /* Domain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +81,7 @@
 		3789230E2A6AF9A400EE518F = {
 			isa = PBXGroup;
 			children = (
+				378923492A6B3CD300EE518F /* Data */,
 				378923452A6B02E300EE518F /* Domain */,
 				378923192A6AF9A400EE518F /* Lbc */,
 				3789232B2A6AF9A600EE518F /* LbcTests */,
@@ -159,6 +163,7 @@
 			name = Lbc;
 			packageProductDependencies = (
 				378923472A6B03AC00EE518F /* Domain */,
+				3722DDD22A6BF92B00DE8EC0 /* Data */,
 			);
 			productName = Lbc;
 			productReference = 378923172A6AF9A400EE518F /* Lbc.app */;
@@ -629,6 +634,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3722DDD22A6BF92B00DE8EC0 /* Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Data;
+		};
 		378923472A6B03AC00EE518F /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Domain;
