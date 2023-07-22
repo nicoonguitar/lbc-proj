@@ -9,7 +9,7 @@ final class CategoryRepositoryImpl: Repository {
     
     init(
         apiClient: APIClient,
-        inMemoryCache: any InMemoryCache<Domain.Category> = CategoryInMemoryCache.shared
+        inMemoryCache: any InMemoryCache<Domain.Category>
     ) {
         self.apiClient = apiClient
         self.inMemoryCache = inMemoryCache

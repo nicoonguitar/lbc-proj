@@ -9,7 +9,7 @@ final class ItemRepositoryImpl: Repository {
 
     init(
         apiClient: APIClient,
-        inMemoryCache: any InMemoryCache<Item> = ItemsInMemoryCache.shared
+        inMemoryCache: any InMemoryCache<Item>
     ) {
         self.apiClient = apiClient
         self.inMemoryCache = inMemoryCache

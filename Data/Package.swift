@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(path: "./Domain")
+        .package(path: "../Domain")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -24,6 +24,11 @@ let package = Package(
             dependencies: ["Domain"]),
         .testTarget(
             name: "DataTests",
-            dependencies: ["Data"]),
+            dependencies: ["Data"],
+            resources: [
+                .copy("Resources/categories.json"),
+                .copy("Resources/listing.json")
+            ]
+        )
     ]
 )
