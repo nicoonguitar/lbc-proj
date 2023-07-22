@@ -1,15 +1,15 @@
 import Foundation
 
 public struct GetItemUseCase {
-    private let itemRepository: ItemRepository
+    private let itemRepository: any Repository<Item>
     
-    init(itemRepository: ItemRepository) {
+    init(itemRepository: any Repository<Item>) {
         self.itemRepository = itemRepository
     }
     
     public func callAsFunction(
         itemId: Int64
-    ) -> Item? {
-        itemRepository.item(for: itemId)
+    ) async -> Item? {
+        await itemRepository.item(for: itemId)
     }
 }

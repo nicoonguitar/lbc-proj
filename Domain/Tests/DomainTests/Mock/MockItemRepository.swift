@@ -1,11 +1,11 @@
 import Foundation
 import Domain
 
-final class MockItemRepository: ItemRepository {
+final class MockItemRepository: Repository {
     
-    var items: [Domain.Item] = []
+    var items: Set<Domain.Item> = .init()
     
-    func all(forceRefresh: Bool) async throws -> [Domain.Item] {
+    func all(forceRefresh: Bool) async throws -> Set<Domain.Item> {
         items
     }
     
