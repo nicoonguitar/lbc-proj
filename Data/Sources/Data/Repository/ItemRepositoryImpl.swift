@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class ItemRepositoryImpl: Repository {
+final class ItemRepositoryImpl: ItemRepository {
     
     private let apiClient: APIClient
 

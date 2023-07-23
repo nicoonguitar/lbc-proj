@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class MockItemRepository: Repository {
+final class MockItemRepository: ItemRepository {
     
     var items: Set<Domain.Item> = .init()
     

@@ -11,7 +11,8 @@ import SwiftUI
 struct LbcApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EmptyView()
         }
     }
 }
+

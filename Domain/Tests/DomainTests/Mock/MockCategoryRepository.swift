@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class MockCategoryRepository: Repository {
+final class MockCategoryRepository: CategoryRepository {
         
     var categories: Set<Domain.Category> = .init()
     

@@ -1,9 +1,9 @@
 import Foundation
 
 public final class GetCategoriesUseCase {
-    private let categoryRepository: any Repository<Category>
+    private let categoryRepository: any CategoryRepository
     
-    init(categoryRepository: any Repository<Category>) {
+    init(categoryRepository: any CategoryRepository) {
         self.categoryRepository = categoryRepository
     }
     
