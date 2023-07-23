@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 3722DDD22A6BF92B00DE8EC0 /* Data */; };
+		3722DDD72A6C447000DE8EC0 /* ListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722DDD62A6C447000DE8EC0 /* ListingViewController.swift */; };
+		3722DDDA2A6D5AD900DE8EC0 /* ServiceLocator in Frameworks */ = {isa = PBXBuildFile; productRef = 3722DDD92A6D5AD900DE8EC0 /* ServiceLocator */; };
 		3789231B2A6AF9A400EE518F /* LbcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789231A2A6AF9A400EE518F /* LbcApp.swift */; };
-		3789231D2A6AF9A400EE518F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789231C2A6AF9A400EE518F /* ContentView.swift */; };
 		3789231F2A6AF9A600EE518F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3789231E2A6AF9A600EE518F /* Assets.xcassets */; };
 		378923232A6AF9A600EE518F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 378923222A6AF9A600EE518F /* Preview Assets.xcassets */; };
 		3789232D2A6AF9A600EE518F /* LbcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3789232C2A6AF9A600EE518F /* LbcTests.swift */; };
@@ -36,9 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3722DDD62A6C447000DE8EC0 /* ListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewController.swift; sourceTree = "<group>"; };
+		3722DDD82A6C472100DE8EC0 /* ServiceLocator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ServiceLocator; sourceTree = "<group>"; };
 		378923172A6AF9A400EE518F /* Lbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3789231A2A6AF9A400EE518F /* LbcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LbcApp.swift; sourceTree = "<group>"; };
-		3789231C2A6AF9A400EE518F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3789231E2A6AF9A600EE518F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		378923202A6AF9A600EE518F /* Lbc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lbc.entitlements; sourceTree = "<group>"; };
 		378923222A6AF9A600EE518F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3722DDDA2A6D5AD900DE8EC0 /* ServiceLocator in Frameworks */,
 				3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */,
 				378923482A6B03AC00EE518F /* Domain in Frameworks */,
 			);
@@ -78,9 +81,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3722DDD42A6C445900DE8EC0 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				3722DDD52A6C445F00DE8EC0 /* Listing */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		3722DDD52A6C445F00DE8EC0 /* Listing */ = {
+			isa = PBXGroup;
+			children = (
+				3722DDD62A6C447000DE8EC0 /* ListingViewController.swift */,
+			);
+			path = Listing;
+			sourceTree = "<group>";
+		};
 		3789230E2A6AF9A400EE518F = {
 			isa = PBXGroup;
 			children = (
+				3722DDD82A6C472100DE8EC0 /* ServiceLocator */,
 				378923492A6B3CD300EE518F /* Data */,
 				378923452A6B02E300EE518F /* Domain */,
 				378923192A6AF9A400EE518F /* Lbc */,
@@ -104,8 +124,8 @@
 		378923192A6AF9A400EE518F /* Lbc */ = {
 			isa = PBXGroup;
 			children = (
+				3722DDD42A6C445900DE8EC0 /* Feature */,
 				3789231A2A6AF9A400EE518F /* LbcApp.swift */,
-				3789231C2A6AF9A400EE518F /* ContentView.swift */,
 				3789231E2A6AF9A600EE518F /* Assets.xcassets */,
 				378923202A6AF9A600EE518F /* Lbc.entitlements */,
 				378923212A6AF9A600EE518F /* Preview Content */,
@@ -164,6 +184,7 @@
 			packageProductDependencies = (
 				378923472A6B03AC00EE518F /* Domain */,
 				3722DDD22A6BF92B00DE8EC0 /* Data */,
+				3722DDD92A6D5AD900DE8EC0 /* ServiceLocator */,
 			);
 			productName = Lbc;
 			productReference = 378923172A6AF9A400EE518F /* Lbc.app */;
@@ -279,8 +300,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3789231D2A6AF9A400EE518F /* ContentView.swift in Sources */,
 				3789231B2A6AF9A400EE518F /* LbcApp.swift in Sources */,
+				3722DDD72A6C447000DE8EC0 /* ListingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +658,10 @@
 		3722DDD22A6BF92B00DE8EC0 /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Data;
+		};
+		3722DDD92A6D5AD900DE8EC0 /* ServiceLocator */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ServiceLocator;
 		};
 		378923472A6B03AC00EE518F /* Domain */ = {
 			isa = XCSwiftPackageProductDependency;

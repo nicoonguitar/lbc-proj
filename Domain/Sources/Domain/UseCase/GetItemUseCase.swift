@@ -1,9 +1,9 @@
 import Foundation
 
 public struct GetItemUseCase {
-    private let itemRepository: any Repository<Item>
+    private let itemRepository: any ItemRepository
     
-    init(itemRepository: any Repository<Item>) {
+    init(itemRepository: any ItemRepository) {
         self.itemRepository = itemRepository
     }
     

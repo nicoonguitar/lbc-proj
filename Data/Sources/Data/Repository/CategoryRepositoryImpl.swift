@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class CategoryRepositoryImpl: Repository {
+final class CategoryRepositoryImpl: CategoryRepository {
         
     private let apiClient: APIClient
     
