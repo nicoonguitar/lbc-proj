@@ -15,6 +15,8 @@ public final class ClassifiedAdView: UIStackView {
         let view = UILabel()
         view.numberOfLines = 2
         view.lineBreakMode = .byTruncatingTail
+        view.textColor = .black
+        view.font = .systemFont(ofSize: 16, weight: .bold)
         return view
     }()
         
@@ -22,6 +24,8 @@ public final class ClassifiedAdView: UIStackView {
         let view = UILabel()
         view.numberOfLines = 1
         view.lineBreakMode = .byTruncatingTail
+        view.textColor = .black
+        view.font = .systemFont(ofSize: 14, weight: .bold)
         return view
     }()
     
@@ -29,6 +33,8 @@ public final class ClassifiedAdView: UIStackView {
         let view = UILabel()
         view.numberOfLines = 1
         view.lineBreakMode = .byTruncatingTail
+        view.textColor = .gray
+        view.font = .systemFont(ofSize: 14, weight: .regular)
         return view
     }()
     
