@@ -11,10 +11,10 @@ final class ListingViewModel {
     
     @Published private(set) var items: [ListingRowUIModel] = []
     
-    @Published private(set) var categories: [Domain.Category] = []
+    @Published private(set) var categories: [CategoryUIModel] = []
     
-    @Published private(set) var selectedCategory: Domain.Category?
-    
+    @Published private(set) var selectedCategory: CategoryUIModel?
+        
     enum ContentState: Equatable {
         case idle
         case fetching
@@ -34,13 +34,14 @@ final class ListingViewModel {
         self.getSortedItemsUseCase = getSortedItemsUseCase
     }
     
-    private func fetchAllData() async {
+    @MainActor
+    func fetchClassifiedAds(forceRefresh: Bool = true) async {
         do {
             self.content = .fetching
             
             self.items = try await getSortedItemsUseCase(
                 categoryId: selectedCategory?.id,
-                forceRefresh: true
+                forceRefresh: forceRefresh
             ).map {
                 ListingRowUIModel.build(
                     from: $0.item,
@@ -54,13 +55,29 @@ final class ListingViewModel {
             self.content = .error(error.localizedDescription)
         }
     }
-    
-    func viewDidLoad() async {
-        await fetchAllData()
+
+    @MainActor
+    func onFetchCategories() async {
+        do {
+            self.categories = try await getCategoriesUseCase(forceRefresh: true)
+                .map { .init(id: $0.id, name: $0.name) }
+        } catch {
+            // TODO: handle error
+            print(error.localizedDescription)
+        }
     }
     
-    func onPullToRefresh() async {
-        await fetchAllData()
+    @MainActor
+    func onCategorySelection(at indexPath: IndexPath) async {
+        if indexPath.row < categories.count {
+            let newSelection = categories[indexPath.row]
+            if selectedCategory?.id == newSelection.id {
+                selectedCategory = nil
+            } else {
+                selectedCategory = newSelection
+            }
+            await fetchClassifiedAds(forceRefresh: false)
+        }
     }
     
     func onItemSelection(at indexPath: IndexPath) async {
@@ -71,4 +88,10 @@ final class ListingViewModel {
         
         // TODO: trigger navigation to Detail page with provided Item id
     }
+    
+//    func onFilter() {
+//        
+//    }
+    
+
 }

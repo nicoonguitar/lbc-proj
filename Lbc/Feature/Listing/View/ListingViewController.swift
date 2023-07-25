@@ -20,7 +20,11 @@ final class ListingViewController: UIViewController {
     
     // little header view -> selected category name (idea)
     
-    // nav bar button -> filter
+    private let filterBarItem: UIBarButtonItem = {
+        let view = UIBarButtonItem(systemItem: .bookmarks)
+        view.tintColor = .orange
+        return view
+    }()
     
     /*
      Fetch data task lifecycle is managed by the view.
@@ -76,6 +80,18 @@ final class ListingViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        NSLayoutConstraint.activate(constraints)
+
+        // Filter bar button item setup
+        navigationItem.rightBarButtonItem = filterBarItem
+        filterBarItem.primaryAction = .init() { [weak self] _ in
+            // TODO: relocate to Coordinator
+            let categoriesVC: CategoriesViewController = ServiceLocator.shared.get()
+            let navController = UINavigationController(rootViewController: categoriesVC)
+            navController.modalPresentationStyle = .formSheet
+            navController.isModalInPresentation = true
+            self?.present(navController, animated: true)
+        }
         
         // Collection view setup
         collectionView.register(
@@ -89,18 +105,17 @@ final class ListingViewController: UIViewController {
         let action = UIAction { [weak self] _ in
             self?.task?.cancel()
             self?.task = Task {
-                await self?.viewModel.onPullToRefresh()
+                await self?.viewModel.fetchClassifiedAds()
             }
         }
         refreshControl.addAction(action, for: .valueChanged)
         collectionView.refreshControl = refreshControl
         
-        NSLayoutConstraint.activate(constraints)
         bindings()
         
         task?.cancel()
         task = Task {
-            await viewModel.viewDidLoad()
+            await viewModel.fetchClassifiedAds()
         }
     }
     
@@ -170,7 +185,7 @@ extension ListingViewController: UICollectionViewDataSource {
  - listing item
  - category item
  
- FiltersVC
+ FiltersVC ✅
  - how to communicate new selection ?
  - idea on modal dismiss callback to trigger GetSortedItemsUseCase...
  - new selection IndexPath is optional ?
