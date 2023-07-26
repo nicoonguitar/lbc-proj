@@ -52,6 +52,7 @@ extension UICollectionViewCompositionalLayout {
                 bottom: 0,
                 trailing: sectionLateralInset
             )
+            section.interGroupSpacing = interItemSpacing
             return section
         }
     }

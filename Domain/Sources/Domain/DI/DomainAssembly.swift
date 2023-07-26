@@ -8,6 +8,7 @@ public enum DomainAssembly: Assembly {
             GetItemUseCase.self,
             factory: { serviceLocator in
                 GetItemUseCase(
+                    categoryRepository: serviceLocator.get(),
                     itemRepository: serviceLocator.get()
                 )
             }

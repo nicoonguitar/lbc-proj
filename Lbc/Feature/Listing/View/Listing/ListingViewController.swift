@@ -99,7 +99,7 @@ final class ListingViewController: UIViewController {
             forCellWithReuseIdentifier: ListingCollectionViewCell.reuseIdentifier
         )
         collectionView.dataSource = self
-        //        collectionView.delegate = self
+        collectionView.delegate = self
 
         // Pull to refresh
         let action = UIAction { [weak self] _ in
@@ -113,6 +113,7 @@ final class ListingViewController: UIViewController {
         
         bindings()
         
+        // We fetch data when the view appears UI event
         task?.cancel()
         task = Task {
             await viewModel.fetchClassifiedAds()
@@ -174,9 +175,16 @@ extension ListingViewController: UICollectionViewDataSource {
     }
 }
 
+extension ListingViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: relocate to Coordinator
+        let id = viewModel.items[indexPath.row].id
+        let detailVC: ClassifiedAdDetailViewController = ServiceLocator.shared.get(arg: id)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
 /*
- Service Locator + assemblies on each package ✅
- 
  ImageLoader
  - downloader
  - cache
@@ -185,11 +193,6 @@ extension ListingViewController: UICollectionViewDataSource {
  - listing item
  - category item
  
- FiltersVC ✅
- - how to communicate new selection ?
- - idea on modal dismiss callback to trigger GetSortedItemsUseCase...
- - new selection IndexPath is optional ?
- 
  DetailVC
  
  Coordinator ?
@@ -197,5 +200,6 @@ extension ListingViewController: UICollectionViewDataSource {
  
  Disable dark mode
  
+ Screen rotation ?
  */
 

@@ -4,9 +4,10 @@ import UIKit
 
 final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
     
-    private let wrappedView: ClassifiedAdView = .init()
+    private let wrappedView: ClassifiedAdView
     
     override init(frame: CGRect) {
+        wrappedView = .init(style: .cell)
         super.init(frame: .zero)
         // Layout
         wrappedView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,17 +29,17 @@ final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
     override func prepareForReuse() {
         super.prepareForReuse()
         wrappedView.imageView.image = nil
-        wrappedView.titleLabel.text = ""
-        wrappedView.categoryLabel.text = ""
-        wrappedView.priceLabel.text = ""
+        wrappedView.infoView.titleLabel.text = ""
+        wrappedView.infoView.categoryLabel.text = ""
+        wrappedView.infoView.priceLabel.text = ""
         wrappedView.badgeView.isHidden = true
     }
     
     func set(model: ListingRowUIModel) {
-        wrappedView.titleLabel.text = model.title
-        wrappedView.categoryLabel.text = model.category
+        wrappedView.infoView.titleLabel.text = model.title
+        wrappedView.infoView.categoryLabel.text = model.category
         // Assumption: the prices are provided in Euro as currency
-        wrappedView.priceLabel.text = "\(model.price) €"
+        wrappedView.infoView.priceLabel.text = "\(model.price) €"
         wrappedView.badgeView.isHidden = !model.isUrgent
     }
 }
