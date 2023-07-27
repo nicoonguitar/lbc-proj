@@ -1,7 +1,6 @@
 import Foundation
 import Domain
 
-@globalActor
 actor CategoryInMemoryCache: InMemoryCache {
     
     static let shared = CategoryInMemoryCache()

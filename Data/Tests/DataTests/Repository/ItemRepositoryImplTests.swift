@@ -77,7 +77,7 @@ final class ItemRepositoryImplTests: XCTestCase {
     func testGetAllReturnsCachedDataIfAnyAndRefreshIsNotForced() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .map { Domain.Item.build(from: $0) }
+            .compactMap { Domain.Item.build(from: $0) }
         await ItemsInMemoryCache.shared.save(cached)
         
         XCTAssert(apiClient.items.isEmpty)
@@ -99,7 +99,7 @@ final class ItemRepositoryImplTests: XCTestCase {
     func testGetItemExists() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .map { Domain.Item.build(from: $0) }
+            .compactMap { Domain.Item.build(from: $0) }
         await ItemsInMemoryCache.shared.save(cached)
         
         // When
@@ -117,7 +117,7 @@ final class ItemRepositoryImplTests: XCTestCase {
     func testGetItemDoesNotExist() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .map { Domain.Item.build(from: $0) }
+            .compactMap { Domain.Item.build(from: $0) }
         await ItemsInMemoryCache.shared.save(cached)
         
         // When

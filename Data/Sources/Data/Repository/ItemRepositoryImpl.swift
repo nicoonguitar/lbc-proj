@@ -19,7 +19,7 @@ final class ItemRepositoryImpl: ItemRepository {
         let cached = await inMemoryCache.cache
         if cached.isEmpty || forceRefresh {
             let response = try await apiClient.items()
-            let models = response.map { Domain.Item.build(from: $0) }
+            let models = response.compactMap { Domain.Item.build(from: $0) }
             await inMemoryCache.clean()
             await inMemoryCache.save(models)
             return await inMemoryCache.cache
