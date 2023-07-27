@@ -62,9 +62,10 @@ final class ListingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // View customization
         title = "Listing"
         view.backgroundColor = .white
-                
+        
         // Layout
         var constraints: [NSLayoutConstraint] = []
         collectionView.translatesAutoresizingMaskIntoConstraints = false

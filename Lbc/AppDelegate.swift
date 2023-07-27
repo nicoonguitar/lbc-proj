@@ -22,6 +22,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         guard let window = window else { return true }
         let listingViewController: ListingViewController = ServiceLocator.shared.get()
         let navController = UINavigationController(rootViewController: listingViewController)
+        navController.navigationBar.tintColor = .orange
         window.rootViewController = navController
         window.makeKeyAndVisible()
         return true
