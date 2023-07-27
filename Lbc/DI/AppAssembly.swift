@@ -29,19 +29,30 @@ enum AppAssembly: Assembly {
         )
         
         serviceLocator.factory(
-            ListingViewController.self,
+            MainCoordinator.self,
             factory: { serviceLocator in
                 .init(
-                    viewModel: serviceLocator.get()
+                    serviceLocator: serviceLocator
+                )
+            }
+        )
+        
+        serviceLocator.factory(
+            ListingViewController.self,
+            factory: { (serviceLocator, coordinator: MainCoordinator) in
+                .init(
+                    viewModel: serviceLocator.get(),
+                    coordinator: coordinator
                 )
             }
         )
         
         serviceLocator.factory(
             CategoriesViewController.self,
-            factory: { serviceLocator in
+            factory: { (serviceLocator, coordinator: MainCoordinator) in
                 .init(
-                    viewModel: serviceLocator.get()
+                    viewModel: serviceLocator.get(),
+                    coordinator: coordinator
                 )
             }
         )

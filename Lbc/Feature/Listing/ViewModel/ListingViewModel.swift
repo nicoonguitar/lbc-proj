@@ -1,6 +1,12 @@
 import Foundation
 import Domain
 
+/// The ListingViewModel class is responsible for wiring the UI event, the business logic and resulting UI state related to a classified ads listing view and its content filtering via a given Category selection.
+/// It communicates with the various use cases (GetCategoriesUseCase, GetItemUseCase, and GetSortedItemsUseCase) to fetch data and update its internal UI state.
+/// The ViewModel also provides various methods to interact with the view and trigger navigation actions through the MainCoordinator.
+///
+/// Note: The reason properties and functions of the ViewModel are annotated with @MainActor instead of the whole class is because doing so
+/// would make the ViewModel initializer async, which the Service Locator cannot manage.
 final class ListingViewModel {
     
     private let getItemUseCase: GetItemUseCase
@@ -9,11 +15,14 @@ final class ListingViewModel {
     
     private let getCategoriesUseCase: GetCategoriesUseCase
     
-    @Published private(set) var items: [ListingRowUIModel] = []
+    @Published @MainActor
+    private(set) var items: [ListingRowUIModel] = []
     
-    @Published private(set) var categories: [CategoryUIModel] = []
+    @Published @MainActor
+    private(set) var categories: [CategoryUIModel] = []
     
-    @Published private(set) var selectedCategory: CategoryUIModel?
+    @Published @MainActor
+    private(set) var selectedCategory: CategoryUIModel?
         
     enum ContentState: Equatable {
         case idle
@@ -22,7 +31,11 @@ final class ListingViewModel {
         case error(String)
     }
     
-    @Published private(set) var content: ContentState = .idle
+    @Published @MainActor
+    private(set) var content: ContentState = .idle
+    
+    @Published @MainActor
+    private(set) var navigationAction: MainCoordinator.NavigationAction?
     
     init(
         getCategoriesUseCase: GetCategoriesUseCase,
@@ -43,10 +56,7 @@ final class ListingViewModel {
                 categoryId: selectedCategory?.id,
                 forceRefresh: forceRefresh
             ).map {
-                ListingRowUIModel.build(
-                    from: $0.item,
-                    category: $0.category
-                )
+                .build(from: $0.item, category: $0.category)
             }
             
             self.content = self.items.isEmpty ? .noContent : .idle
@@ -60,7 +70,9 @@ final class ListingViewModel {
     func onFetchCategories() async {
         do {
             self.categories = try await getCategoriesUseCase(forceRefresh: true)
-                .map { .init(id: $0.id, name: $0.name) }
+                .map {
+                    .init(id: $0.id, name: $0.name)
+                }
         } catch {
             // TODO: handle error
             print(error.localizedDescription)
@@ -77,21 +89,29 @@ final class ListingViewModel {
                 selectedCategory = newSelection
             }
             await fetchClassifiedAds(forceRefresh: false)
+            
+            navigationAction = .dismissCategories
+            navigationAction = nil
         }
     }
     
-    func onItemSelection(at indexPath: IndexPath) async {
-//        let id = items[indexPath.row].id
-//        guard let result = await getItemUseCase(itemId: id) else {
-//            return
-//        }
-        
-        // TODO: trigger navigation to Detail page with provided Item id
+    @MainActor
+    func onItemSelection(at indexPath: IndexPath) {
+        guard indexPath.row < items.count else { return }
+        let id = items[indexPath.row].id
+        navigationAction = .showClassifiedAdDetail(id: id)
+        navigationAction = nil
     }
     
-//    func onFilter() {
-//        
-//    }
+    @MainActor
+    func onFilter() {
+        navigationAction = .showCategories
+        navigationAction = nil
+    }
     
-
+    @MainActor
+    func onDismissCategories() {
+        navigationAction = .dismissCategories
+        navigationAction = nil
+    }
 }

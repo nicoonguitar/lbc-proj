@@ -1,21 +1,15 @@
-//
-//  ListingViewController.swift
-//  Lbc
-//
-//  Created by Nicolás García on 22/07/2023.
-//
-
 import Combine
 import Data
 import Design
 import Domain
 import Foundation
-import ServiceLocator
 import UIKit
 
 final class ListingViewController: UIViewController {
     
     private let viewModel: ListingViewModel
+    
+    private weak var coordinator: MainCoordinator?
     
     private let fillableBarButtonItem = FillableBarButtonItem(
         model: .buildFilter()
@@ -51,8 +45,12 @@ final class ListingViewController: UIViewController {
         return label
     }
     
-    init(viewModel: ListingViewModel) {
+    init(
+        viewModel: ListingViewModel,
+        coordinator: MainCoordinator?
+    ) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -82,12 +80,7 @@ final class ListingViewController: UIViewController {
         navigationItem.rightBarButtonItem = fillableBarButtonItem
         
         fillableBarButtonItem.primaryAction = .init() { [weak self] _ in
-            // TODO: relocate to Coordinator
-            let categoriesVC: CategoriesViewController = ServiceLocator.shared.get()
-            let navController = UINavigationController(rootViewController: categoriesVC)
-            navController.modalPresentationStyle = .formSheet
-            navController.isModalInPresentation = true
-            self?.present(navController, animated: true)
+            self?.viewModel.onFilter()
         }
         
         // Collection view setup
@@ -160,6 +153,13 @@ final class ListingViewController: UIViewController {
             .sink { [weak self] in
                 self?.fillableBarButtonItem.isFilled = $0
             }.store(in: &cancellables)
+        
+        viewModel.$navigationAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] action in
+                guard let self, let action else { return }
+                self.coordinator?.onNavigationAction(action, origin: self)
+            }.store(in: &cancellables)
     }
 }
 
@@ -181,27 +181,11 @@ extension ListingViewController: UICollectionViewDataSource {
 
 extension ListingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: relocate to Coordinator
-        let id = viewModel.items[indexPath.row].id
-        let detailVC: ClassifiedAdDetailViewController = ServiceLocator.shared.get(arg: id)
-        navigationController?.pushViewController(detailVC, animated: true)
+        viewModel.onItemSelection(at: indexPath)
     }
 }
 
 /*
- ImageLoader
- - downloader
- - cache
- 
- Design package
- - listing item
- - category item
- 
- DetailVC
- 
- Coordinator ?
- + access to DI container
- 
  Disable dark mode
  
  Screen rotation ?

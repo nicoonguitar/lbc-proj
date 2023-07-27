@@ -6,6 +6,8 @@ final class CategoriesViewController: UITableViewController {
     
     private let viewModel: ListingViewModel
     
+    private weak var coordinator: MainCoordinator?
+
     /*
      Fetch data task lifecycle is managed by the view.
      We set a task as a ViewController property similar to how SwiftUI views provide
@@ -21,8 +23,12 @@ final class CategoriesViewController: UITableViewController {
         return view
     }()
 
-    init(viewModel: ListingViewModel) {
+    init(
+        viewModel: ListingViewModel,
+        coordinator: MainCoordinator?
+    ) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(style: .insetGrouped)
     }
     
@@ -37,6 +43,13 @@ final class CategoriesViewController: UITableViewController {
                 self?.tableView.reloadData()
                 self?.refreshControl?.endRefreshing()
             }.store(in: &cancellables)
+        
+        viewModel.$navigationAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] action in
+                guard let self, let action else { return }
+                self.coordinator?.onNavigationAction(action, origin: self)
+            }.store(in: &cancellables)
     }
     
     override func viewDidLoad() {
@@ -45,8 +58,7 @@ final class CategoriesViewController: UITableViewController {
         // Filter bar button item setup
         navigationItem.rightBarButtonItem = closeBarItem
         closeBarItem.primaryAction = .init() { [weak self] _ in
-            // TODO: relocate to Coordinator
-            self?.dismiss(animated: true)
+            self?.viewModel.onDismissCategories()
         }
         
         // UITableView setup
@@ -72,7 +84,8 @@ final class CategoriesViewController: UITableViewController {
             tableView.selectRow(at: .init(row: 0, section: 0), animated: true, scrollPosition: .middle)
         }
         
-        Task {
+        task?.cancel()
+        task = Task {
             await viewModel.onFetchCategories()
         }
     }
@@ -97,8 +110,6 @@ final class CategoriesViewController: UITableViewController {
         task?.cancel()
         task = Task {
             await viewModel.onCategorySelection(at: indexPath)
-            // TODO: relocate to Coordinator
-            dismiss(animated: true)
         }
     }
 }

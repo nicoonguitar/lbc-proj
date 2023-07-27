@@ -9,6 +9,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     
     var window: UIWindow?
 
+    var coordinator: MainCoordinator?
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
@@ -20,10 +22,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         guard let window = window else { return true }
-        let listingViewController: ListingViewController = ServiceLocator.shared.get()
-        let navController = UINavigationController(rootViewController: listingViewController)
-        navController.navigationBar.tintColor = .orange
-        window.rootViewController = navController
+        coordinator = ServiceLocator.shared.get() as MainCoordinator
+        coordinator?.start()
+        window.rootViewController = coordinator?.navigationController
         window.makeKeyAndVisible()
         return true
     }
