@@ -173,6 +173,7 @@
 		3722DDD52A6C445F00DE8EC0 /* Listing */ = {
 			isa = PBXGroup;
 			children = (
+				370F45A22A72F98400D61179 /* AppCoordinator.swift */,
 				370F45932A70424F00D61179 /* View */,
 				370F45902A70420900D61179 /* ViewModel */,
 			);
@@ -223,7 +224,6 @@
 				378923212A6AF9A600EE518F /* Preview Content */,
 				3722DDDB2A6DB04D00DE8EC0 /* AppDelegate.swift */,
 				370F459F2A72D32200D61179 /* ImageLoader.swift */,
-				370F45A22A72F98400D61179 /* AppCoordinator.swift */,
 			);
 			path = Lbc;
 			sourceTree = "<group>";
