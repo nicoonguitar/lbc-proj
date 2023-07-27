@@ -16,6 +16,8 @@ final class ClassifiedAdDetailViewController: UIViewController {
      */
     private var task: Task<Void, Never>?
     
+    private var imageLoadingTask: Task<Void, Never>?
+    
     private var cancellables: Set<AnyCancellable> = .init()
     
     private let wrappedView: ClassifiedAdView = .init(style: .fullScreen)
@@ -47,6 +49,16 @@ final class ClassifiedAdDetailViewController: UIViewController {
                 
                 self?.wrappedView.badgeView.isHidden = !detail.isUrgent
                 
+                guard let imageURL = detail.image else { return }
+                self?.imageLoadingTask?.cancel()
+                self?.imageLoadingTask = Task { @MainActor in
+                    do {
+                        let image = try await ImageLoader.shared.fetch(imageURL)
+                        self?.wrappedView.imageView.image = image
+                    } catch {
+                        self?.wrappedView.imageView.image = Assets.placeholder
+                    }
+                }
             }.store(in: &cancellables)
     }
     

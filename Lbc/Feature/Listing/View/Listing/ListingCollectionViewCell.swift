@@ -6,6 +6,9 @@ final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
     
     private let wrappedView: ClassifiedAdView
     
+    // Image loading task lifecycle is managed by the cell instance.
+    private var imageLoadingTask: Task<Void, Never>?
+    
     override init(frame: CGRect) {
         wrappedView = .init(style: .cell)
         super.init(frame: .zero)
@@ -28,6 +31,7 @@ final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        imageLoadingTask?.cancel()
         wrappedView.imageView.image = nil
         wrappedView.infoView.titleLabel.text = ""
         wrappedView.infoView.categoryLabel.text = ""
@@ -41,5 +45,16 @@ final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
         // Assumption: the prices are provided in Euro as currency
         wrappedView.infoView.priceLabel.text = "\(model.price) €"
         wrappedView.badgeView.isHidden = !model.isUrgent
+        
+        guard let imageURL = model.image else { return }
+        imageLoadingTask?.cancel()
+        imageLoadingTask = Task { @MainActor [weak self] in
+            do {
+                let image = try await ImageLoader.shared.fetch(imageURL)
+                self?.wrappedView.imageView.image = image
+            } catch {
+                self?.wrappedView.imageView.image = Assets.placeholder
+            }
+        }
     }
 }
