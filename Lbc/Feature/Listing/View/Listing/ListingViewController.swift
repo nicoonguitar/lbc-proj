@@ -16,15 +16,10 @@ import UIKit
 final class ListingViewController: UIViewController {
     
     private let viewModel: ListingViewModel
-    // diff data source + compositional layout (iPhone/iPad)
     
-    // little header view -> selected category name (idea)
-    
-    private let filterBarItem: UIBarButtonItem = {
-        let view = UIBarButtonItem(systemItem: .bookmarks)
-        view.tintColor = .orange
-        return view
-    }()
+    private let fillableBarButtonItem = FillableBarButtonItem(
+        model: .buildFilter()
+    )
     
     /*
      Fetch data task lifecycle is managed by the view.
@@ -83,8 +78,9 @@ final class ListingViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
 
         // Filter bar button item setup
-        navigationItem.rightBarButtonItem = filterBarItem
-        filterBarItem.primaryAction = .init() { [weak self] _ in
+        navigationItem.rightBarButtonItem = fillableBarButtonItem
+        
+        fillableBarButtonItem.primaryAction = .init() { [weak self] _ in
             // TODO: relocate to Coordinator
             let categoriesVC: CategoriesViewController = ServiceLocator.shared.get()
             let navController = UINavigationController(rootViewController: categoriesVC)
@@ -155,6 +151,13 @@ final class ListingViewController: UIViewController {
                     label.text = error
                     self.collectionView.backgroundView = label
                 }
+            }.store(in: &cancellables)
+        
+        viewModel.$selectedCategory
+            .map { $0 != nil }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.fillableBarButtonItem.isFilled = $0
             }.store(in: &cancellables)
     }
 }
