@@ -1,22 +1,24 @@
 import Foundation
 import ServiceLocator
 
-public final class DomainAssembly: Assembly {
+public enum DomainAssembly: Assembly {
     
     public static func register(serviceLocator: ServiceLocator) {
         serviceLocator.factory(
-            GetItemsUseCase.self,
+            GetItemUseCase.self,
             factory: { serviceLocator in
-                GetItemsUseCase(
+                GetItemUseCase(
+                    categoryRepository: serviceLocator.get(),
                     itemRepository: serviceLocator.get()
                 )
             }
         )
         
         serviceLocator.factory(
-            GetItemsUseCase.self,
+            GetSortedItemsUseCase.self,
             factory: { serviceLocator in
-                GetItemsUseCase(
+                GetSortedItemsUseCase(
+                    categoryRepository: serviceLocator.get(),
                     itemRepository: serviceLocator.get()
                 )
             }

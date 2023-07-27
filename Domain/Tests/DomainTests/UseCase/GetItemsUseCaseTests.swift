@@ -9,19 +9,31 @@ import XCTest
 @testable import Domain
 
 final class GetItemsUseCaseTests: XCTestCase {
-
-    var sut: GetItemsUseCase!
+    
+    var sut: GetSortedItemsUseCase!
+    
+    var categoryRepository: MockCategoryRepository!
     
     var itemRepository: MockItemRepository!
     
     override func setUp() {
         super.setUp()
+        categoryRepository = MockCategoryRepository()
         itemRepository = MockItemRepository()
-        sut = GetItemsUseCase(
+        sut = GetSortedItemsUseCase(
+            categoryRepository: categoryRepository,
             itemRepository: itemRepository
         )
+        
+        // Populates categories dumb data
+        categoryRepository.categories = [
+            Category(id: 0, name: ""),
+            Category(id: 1, name: ""),
+            Category(id: 2, name: ""),
+            Category(id: 3, name: "")
+        ]
     }
-
+    
     // MARK: - all items
     
     func testGetAllItemsSortedNonUrgent() async throws {
@@ -36,7 +48,8 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: nil, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemD, itemC, itemB, itemA])
+        XCTAssertEqual(result.map { $0.item }, [itemD, itemC, itemB, itemA])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemD.categoryId, itemC.categoryId, itemB.categoryId, itemA.categoryId])
     }
     
     func testGetAllItemsSortedSomeUrgent() async throws {
@@ -51,7 +64,8 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: nil, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemB, itemA, itemD, itemC])
+        XCTAssertEqual(result.map { $0.item }, [itemB, itemA, itemD, itemC])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemB.categoryId, itemA.categoryId, itemD.categoryId, itemC.categoryId])
     }
     
     func testGetAllItemsSortedAllUrgent() async throws {
@@ -66,7 +80,8 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: nil, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemD, itemC, itemB, itemA])
+        XCTAssertEqual(result.map { $0.item }, [itemD, itemC, itemB, itemA])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemD.categoryId, itemC.categoryId, itemB.categoryId, itemA.categoryId])
     }
     
     // MARK: - filtered items by category
@@ -83,7 +98,8 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: 0, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemC, itemA])
+        XCTAssertEqual(result.map { $0.item }, [itemC, itemA])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemC.categoryId, itemA.categoryId])
     }
     
     func testGetFilteredItemsSortedSomeUrgent() async throws {
@@ -98,7 +114,8 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: 0, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemA, itemC])
+        XCTAssertEqual(result.map { $0.item }, [itemA, itemC])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemA.categoryId, itemC.categoryId])
     }
     
     func testGetFilteredItemsSortedAllUrgent() async throws {
@@ -113,6 +130,7 @@ final class GetItemsUseCaseTests: XCTestCase {
         let result = try await sut(categoryId: 0, forceRefresh: Bool.random())
         
         // Then
-        XCTAssertEqual(result, [itemC, itemA])
+        XCTAssertEqual(result.map { $0.item }, [itemC, itemA])
+        XCTAssertEqual(result.map { $0.category?.id }, [itemC.categoryId, itemA.categoryId])
     }
 }
