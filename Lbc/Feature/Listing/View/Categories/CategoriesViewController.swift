@@ -89,8 +89,7 @@ final class CategoriesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reuseIdentifier)!
         let uiModel = viewModel.categories[indexPath.row]
         cell.textLabel?.text = uiModel.name
-//        cell.selectionStyle = .none
-//        cell.isSelected = uiModel.id == viewModel.selectedCategory?.id
+        cell.textLabel?.textColor = uiModel.id == viewModel.selectedCategory?.id ? .orange : .black
         return cell
     }
     
