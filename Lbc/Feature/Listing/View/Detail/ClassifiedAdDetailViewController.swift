@@ -42,11 +42,9 @@ final class ClassifiedAdDetailViewController: UIViewController {
                 guard let detail else { return }
                 self?.wrappedView.infoView.titleLabel.text = detail.title
                 self?.wrappedView.infoView.categoryLabel.text = detail.category
-                // Assumption: the prices are provided in Euro as currency
-                self?.wrappedView.infoView.priceLabel.text = "\(detail.price) €"
+                self?.wrappedView.infoView.priceLabel.text = detail.price
                 self?.wrappedView.infoView.dateLabel.text = detail.creationDate
                 self?.wrappedView.infoView.descriptionLabel.text = detail.description
-                
                 self?.wrappedView.badgeView.isHidden = !detail.isUrgent
                 
                 guard let imageURL = detail.image else { return }

@@ -42,8 +42,8 @@ final class ListingCollectionViewCell: UICollectionViewCell, Reusable {
     func set(model: ListingRowUIModel) {
         wrappedView.infoView.titleLabel.text = model.title
         wrappedView.infoView.categoryLabel.text = model.category
-        // Assumption: the prices are provided in Euro as currency
-        wrappedView.infoView.priceLabel.text = "\(model.price) €"
+        wrappedView.infoView.priceLabel.text = model.price
+        wrappedView.infoView.dateLabel.text = model.creationDate
         wrappedView.badgeView.isHidden = !model.isUrgent
         
         guard let imageURL = model.image else { return }
