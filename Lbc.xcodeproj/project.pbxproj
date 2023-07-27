@@ -13,6 +13,8 @@
 		370F459C2A70644300D61179 /* ClassifiedAdDetailUIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F459B2A70644300D61179 /* ClassifiedAdDetailUIModel.swift */; };
 		370F459E2A70646000D61179 /* ClassifiedAdDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F459D2A70646000D61179 /* ClassifiedAdDetailViewModel.swift */; };
 		370F45A02A72D32200D61179 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F459F2A72D32200D61179 /* ImageLoader.swift */; };
+		370F45A32A72F98400D61179 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370F45A22A72F98400D61179 /* AppCoordinator.swift */; };
+		370F45A52A72F99000D61179 /* Coordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 370F45A42A72F99000D61179 /* Coordinator */; };
 		3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = 3722DDD22A6BF92B00DE8EC0 /* Data */; };
 		3722DDD72A6C447000DE8EC0 /* ListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722DDD62A6C447000DE8EC0 /* ListingViewController.swift */; };
 		3722DDDA2A6D5AD900DE8EC0 /* ServiceLocator in Frameworks */ = {isa = PBXBuildFile; productRef = 3722DDD92A6D5AD900DE8EC0 /* ServiceLocator */; };
@@ -56,6 +58,8 @@
 		370F459B2A70644300D61179 /* ClassifiedAdDetailUIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifiedAdDetailUIModel.swift; sourceTree = "<group>"; };
 		370F459D2A70646000D61179 /* ClassifiedAdDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifiedAdDetailViewModel.swift; sourceTree = "<group>"; };
 		370F459F2A72D32200D61179 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		370F45A12A72F35600D61179 /* Coordinator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Coordinator; sourceTree = "<group>"; };
+		370F45A22A72F98400D61179 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		3722DDD62A6C447000DE8EC0 /* ListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewController.swift; sourceTree = "<group>"; };
 		3722DDD82A6C472100DE8EC0 /* ServiceLocator */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ServiceLocator; sourceTree = "<group>"; };
 		3722DDDB2A6DB04D00DE8EC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 				3722DDDA2A6D5AD900DE8EC0 /* ServiceLocator in Frameworks */,
 				3722DDD32A6BF92B00DE8EC0 /* Data in Frameworks */,
 				378923482A6B03AC00EE518F /* Domain in Frameworks */,
+				370F45A52A72F99000D61179 /* Coordinator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +190,7 @@
 		3789230E2A6AF9A400EE518F = {
 			isa = PBXGroup;
 			children = (
+				370F45A12A72F35600D61179 /* Coordinator */,
 				3722DDE92A6DF0B200DE8EC0 /* Design */,
 				3722DDD82A6C472100DE8EC0 /* ServiceLocator */,
 				378923492A6B3CD300EE518F /* Data */,
@@ -217,6 +223,7 @@
 				378923212A6AF9A600EE518F /* Preview Content */,
 				3722DDDB2A6DB04D00DE8EC0 /* AppDelegate.swift */,
 				370F459F2A72D32200D61179 /* ImageLoader.swift */,
+				370F45A22A72F98400D61179 /* AppCoordinator.swift */,
 			);
 			path = Lbc;
 			sourceTree = "<group>";
@@ -274,6 +281,7 @@
 				3722DDD22A6BF92B00DE8EC0 /* Data */,
 				3722DDD92A6D5AD900DE8EC0 /* ServiceLocator */,
 				3722DDEA2A6E033700DE8EC0 /* Design */,
+				370F45A42A72F99000D61179 /* Coordinator */,
 			);
 			productName = Lbc;
 			productReference = 378923172A6AF9A400EE518F /* Lbc.app */;
@@ -401,6 +409,7 @@
 				370F45952A70488100D61179 /* CategoryTableViewCell.swift in Sources */,
 				3722DDE82A6DCD8300DE8EC0 /* ListingCollectionViewCell.swift in Sources */,
 				3722DDDE2A6DB9D500DE8EC0 /* ListingViewModel.swift in Sources */,
+				370F45A32A72F98400D61179 /* AppCoordinator.swift in Sources */,
 				37F1EEAD2A6F3FAD00CB004F /* CategoriesViewController.swift in Sources */,
 				3722DDED2A6E053000DE8EC0 /* Listing+CompositionalLayout.swift in Sources */,
 			);
@@ -758,6 +767,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		370F45A42A72F99000D61179 /* Coordinator */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Coordinator;
+		};
 		3722DDD22A6BF92B00DE8EC0 /* Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Data;
