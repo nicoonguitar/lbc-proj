@@ -138,7 +138,7 @@ final class ListingViewController: UIViewController {
                 self?.refreshControl.endRefreshing()
             }.store(in: &cancellables)
         
-        viewModel.$content
+        viewModel.$adsContent
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
