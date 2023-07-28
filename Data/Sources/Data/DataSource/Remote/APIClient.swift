@@ -4,5 +4,5 @@ protocol APIClient: AnyObject {
     
     func categories() async throws -> [ApiCategory]
     
-    func items() async throws -> [ApiItem]
+    func classifiedAds() async throws -> [ApiClassifiedAd]
 }

@@ -11,9 +11,9 @@ final class URLTests: XCTestCase {
         )
     }
     
-    func testItemsURL() {
+    func testListingURL() {
         XCTAssertEqual(
-            URL.buildItemsURL().absoluteString,
+            URL.buildListingURL().absoluteString,
             "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json"
         )
     }

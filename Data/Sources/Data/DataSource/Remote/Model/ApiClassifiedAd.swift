@@ -1,6 +1,6 @@
 import Foundation
 
-struct ApiItem: Decodable, Equatable {
+struct ApiClassifiedAd: Decodable, Equatable {
     struct Images: Decodable, Equatable {
         let small: String?
         let thumb: String?

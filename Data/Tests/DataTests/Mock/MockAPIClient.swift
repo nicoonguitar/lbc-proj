@@ -5,13 +5,13 @@ final class MockAPIClient: APIClient {
     
     var categories: [ApiCategory] = []
     
-    var items: [ApiItem] = []
+    var items: [ApiClassifiedAd] = []
     
     func categories() async throws -> [ApiCategory] {
         categories
     }
     
-    func items() async throws -> [ApiItem] {
+    func classifiedAds() async throws -> [ApiClassifiedAd] {
         items
     }
 }

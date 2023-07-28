@@ -5,21 +5,21 @@ public enum DomainAssembly: Assembly {
     
     public static func register(serviceLocator: ServiceLocator) {
         serviceLocator.factory(
-            GetItemUseCase.self,
+            GetClassifiedAdUseCase.self,
             factory: { serviceLocator in
-                GetItemUseCase(
+                GetClassifiedAdUseCase(
                     categoryRepository: serviceLocator.get(),
-                    itemRepository: serviceLocator.get()
+                    classifiedAdRepository: serviceLocator.get()
                 )
             }
         )
         
         serviceLocator.factory(
-            GetSortedItemsUseCase.self,
+            GetSortedClassifiedAdsUseCase.self,
             factory: { serviceLocator in
-                GetSortedItemsUseCase(
+                GetSortedClassifiedAdsUseCase(
                     categoryRepository: serviceLocator.get(),
-                    itemRepository: serviceLocator.get()
+                    classifiedAdRepository: serviceLocator.get()
                 )
             }
         )

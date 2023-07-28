@@ -28,7 +28,7 @@ extension ListingRowUIModel {
         return formatter
     }()
     
-    static func build(from model: Item, category: Domain.Category?) -> Self {
+    static func build(from model: ClassifiedAd, category: Domain.Category?) -> Self {
         .init(
             id: model.id,
             category: category?.name ?? "",

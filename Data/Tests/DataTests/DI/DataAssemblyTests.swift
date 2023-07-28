@@ -15,6 +15,6 @@ final class DataAssemblyTests: XCTestCase {
     func testRegisteredRepositoryImplementations() {
         DataAssembly.register(serviceLocator: ServiceLocator.shared)
         let _: any CategoryRepository = ServiceLocator.shared.get()
-        let _: any ItemRepository = ServiceLocator.shared.get()
+        let _: any ClassifiedAdRepository = ServiceLocator.shared.get()
     }
 }

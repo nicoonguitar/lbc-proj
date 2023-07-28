@@ -2,18 +2,18 @@ import XCTest
 @testable import Data
 import Domain
 
-final class ItemRepositoryImplTests: XCTestCase {
+final class ClassifiedAdRepositoryImplTests: XCTestCase {
 
-    var sut: ItemRepositoryImpl!
+    var sut: ClassifiedAdRepositoryImpl!
     
     var apiClient: MockAPIClient!
     
     override func setUp() {
         super.setUp()
         apiClient = MockAPIClient()
-        sut = ItemRepositoryImpl(
+        sut = ClassifiedAdRepositoryImpl(
             apiClient: apiClient,
-            inMemoryCache: ItemsInMemoryCache.shared
+            inMemoryCache: ClassifiedAdsInMemoryCache.shared
         )
     }
     
@@ -22,7 +22,7 @@ final class ItemRepositoryImplTests: XCTestCase {
         apiClient.items.removeAll()
     }
     
-    private func loadItemsJSON() async throws -> [ApiItem] {
+    private func loadItemsJSON() async throws -> [ApiClassifiedAd] {
         let url  = try XCTUnwrap(
             Bundle.module.url(
                 forResource: "listing",
@@ -30,19 +30,19 @@ final class ItemRepositoryImplTests: XCTestCase {
             )
         )
         let jsonData = try Data(contentsOf: url)
-        return try JSONDecoder().decode([ApiItem].self, from: jsonData)
+        return try JSONDecoder().decode([ApiClassifiedAd].self, from: jsonData)
     }
     
-    // MARK: - get all items
+    // MARK: - get all classifiedAds
     
     func testGetAllByForcingRefresh() async throws {
         // Given
         apiClient.items = try await loadItemsJSON()
         
-        await ItemsInMemoryCache.shared.save([
+        await ClassifiedAdsInMemoryCache.shared.save([
             .init(id: 0, title: "", categoryId: 0, creationDate: Date(), description: "", imagesURL: .init(small: nil, thumb: nil), isUrgent: true, price: 0, siret: nil)
         ])
-        let cacheCount = await ItemsInMemoryCache.shared.cache.count
+        let cacheCount = await ClassifiedAdsInMemoryCache.shared.cache.count
         XCTAssertEqual(cacheCount, 1)
         
         // When
@@ -52,7 +52,7 @@ final class ItemRepositoryImplTests: XCTestCase {
         XCTAssertEqual(result.count, apiClient.items.count)
 
         addTeardownBlock {
-            await ItemsInMemoryCache.shared.clean()
+            await ClassifiedAdsInMemoryCache.shared.clean()
         }
     }
     
@@ -60,7 +60,7 @@ final class ItemRepositoryImplTests: XCTestCase {
         // Given
         apiClient.items = try await loadItemsJSON()
 
-        let cacheCount = await ItemsInMemoryCache.shared.cache.count
+        let cacheCount = await ClassifiedAdsInMemoryCache.shared.cache.count
         XCTAssertEqual(cacheCount, 0)
         
         // When
@@ -70,15 +70,15 @@ final class ItemRepositoryImplTests: XCTestCase {
         XCTAssertEqual(result.count, apiClient.items.count)
 
         addTeardownBlock {
-            await ItemsInMemoryCache.shared.clean()
+            await ClassifiedAdsInMemoryCache.shared.clean()
         }
     }
     
     func testGetAllReturnsCachedDataIfAnyAndRefreshIsNotForced() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .compactMap { Domain.Item.build(from: $0) }
-        await ItemsInMemoryCache.shared.save(cached)
+            .compactMap { Domain.ClassifiedAd.build(from: $0) }
+        await ClassifiedAdsInMemoryCache.shared.save(cached)
         
         XCTAssert(apiClient.items.isEmpty)
         
@@ -86,21 +86,21 @@ final class ItemRepositoryImplTests: XCTestCase {
         let result = try await sut.all(forceRefresh: false)
         
         // Then
-        let cacheCount = await ItemsInMemoryCache.shared.cache.count
+        let cacheCount = await ClassifiedAdsInMemoryCache.shared.cache.count
         XCTAssertEqual(result.count, cacheCount)
 
         addTeardownBlock {
-            await ItemsInMemoryCache.shared.clean()
+            await ClassifiedAdsInMemoryCache.shared.clean()
         }
     }
     
     // MARK: - get item by id
     
-    func testGetItemExists() async throws {
+    func testGetClassifiedAdExists() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .compactMap { Domain.Item.build(from: $0) }
-        await ItemsInMemoryCache.shared.save(cached)
+            .compactMap { Domain.ClassifiedAd.build(from: $0) }
+        await ClassifiedAdsInMemoryCache.shared.save(cached)
         
         // When
         let id: Int64 = 1461267313
@@ -110,15 +110,15 @@ final class ItemRepositoryImplTests: XCTestCase {
         XCTAssertEqual(try XCTUnwrap(result).id, id)
         
         addTeardownBlock {
-            await ItemsInMemoryCache.shared.clean()
+            await ClassifiedAdsInMemoryCache.shared.clean()
         }
     }
     
-    func testGetItemDoesNotExist() async throws {
+    func testGetClassifiedAdDoesNotExist() async throws {
         // Given
         let cached = try await loadItemsJSON()
-            .compactMap { Domain.Item.build(from: $0) }
-        await ItemsInMemoryCache.shared.save(cached)
+            .compactMap { Domain.ClassifiedAd.build(from: $0) }
+        await ClassifiedAdsInMemoryCache.shared.save(cached)
         
         // When
         let id: Int64 = 0
@@ -128,7 +128,7 @@ final class ItemRepositoryImplTests: XCTestCase {
         XCTAssertNil(result)
         
         addTeardownBlock {
-            await ItemsInMemoryCache.shared.clean()
+            await ClassifiedAdsInMemoryCache.shared.clean()
         }
     }
 }

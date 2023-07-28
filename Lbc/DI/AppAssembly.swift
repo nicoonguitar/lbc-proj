@@ -14,8 +14,7 @@ enum AppAssembly: Assembly {
             ListingViewModel.self,
             instance: ListingViewModel(
                 getCategoriesUseCase: serviceLocator.get(),
-                getItemUseCase: serviceLocator.get(),
-                getSortedItemsUseCase: serviceLocator.get()
+                getSortedClassifiedAdsUseCase: serviceLocator.get()
             )
         )
         
@@ -23,7 +22,7 @@ enum AppAssembly: Assembly {
             ClassifiedAdDetailViewModel.self,
             factory: { serviceLocator in
                 .init(
-                    getItemUseCase: serviceLocator.get()
+                    getClassifiedAdUseCase: serviceLocator.get()
                 )
             }
         )

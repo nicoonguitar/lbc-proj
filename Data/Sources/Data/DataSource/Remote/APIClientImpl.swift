@@ -10,7 +10,7 @@ extension URL {
         return urlComponents.url!
     }
     
-    static func buildItemsURL() -> URL {
+    static func buildListingURL() -> URL {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "raw.githubusercontent.com"
@@ -40,7 +40,7 @@ final class APIClientImpl: APIClient {
         try await request(url: URL.buildCategoriesURL())
     }
     
-    func items() async throws -> [ApiItem] {
-        try await request(url: URL.buildItemsURL())
+    func classifiedAds() async throws -> [ApiClassifiedAd] {
+        try await request(url: URL.buildListingURL())
     }
 }
