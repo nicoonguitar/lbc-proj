@@ -1,18 +1,18 @@
 import Foundation
 
-/// The GetItemUseCase is responsible for fetching a classified ad by its ID and its associated category.
-/// It interacts with the CategoryRepository and ItemRepository to retrieve the data and provides a method to execute the use case.
-public struct GetItemUseCase {
+/// The GetClassifiedAdUseCase is responsible for fetching a classified ad by its ID and its associated category.
+/// It interacts with the CategoryRepository and ClassifiedAdRepository to retrieve the data and provides a method to execute the use case.
+public struct GetClassifiedAdUseCase {
     private let categoryRepository: any CategoryRepository
     
-    private let itemRepository: any ItemRepository
+    private let classifiedAdRepository: any ClassifiedAdRepository
     
     init(
         categoryRepository: any CategoryRepository,
-        itemRepository: any ItemRepository
+        classifiedAdRepository: any ClassifiedAdRepository
     ) {
         self.categoryRepository = categoryRepository
-        self.itemRepository = itemRepository
+        self.classifiedAdRepository = classifiedAdRepository
     }
     
     /// Executes the use case to fetch a classified ad and its associated category by its ID.
@@ -23,8 +23,8 @@ public struct GetItemUseCase {
     /// Note: Not finding data for a given category ID is an undefined behaviour, as there isn't a service to fetch data in the provided API.
     public func callAsFunction(
         itemId: Int64
-    ) async -> (item: Item, category: Category?)? {
-        guard let item = await itemRepository.item(for: itemId) else {
+    ) async -> (item: ClassifiedAd, category: Category?)? {
+        guard let item = await classifiedAdRepository.item(for: itemId) else {
             return nil
         }
         let category = await categoryRepository.item(for: item.categoryId)

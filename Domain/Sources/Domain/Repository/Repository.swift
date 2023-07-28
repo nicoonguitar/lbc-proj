@@ -27,4 +27,4 @@ public protocol Repository<T>: AnyObject where T: Hashable {
  */
 public protocol CategoryRepository: Repository<Category> {}
 
-public protocol ItemRepository: Repository<Item> {}
+public protocol ClassifiedAdRepository: Repository<ClassifiedAd> {}

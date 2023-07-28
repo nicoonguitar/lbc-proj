@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Item: Equatable, Hashable, Identifiable {
+public struct ClassifiedAd: Equatable, Hashable, Identifiable {
     public struct Images: Equatable, Hashable {
         public let small: String?
         public let thumb: String?
@@ -47,8 +47,8 @@ public struct Item: Equatable, Hashable, Identifiable {
     }
 }
 
-extension Item: Comparable {
-    public static func < (lhs: Item, rhs: Item) -> Bool {
+extension ClassifiedAd: Comparable {
+    public static func < (lhs: ClassifiedAd, rhs: ClassifiedAd) -> Bool {
         if lhs.isUrgent == rhs.isUrgent {
             return lhs.creationDate > rhs.creationDate
         }

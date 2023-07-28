@@ -1,19 +1,19 @@
 import Foundation
 
-/// The GetSortedItemsUseCase is a  responsible for fetching the listing of classified ads and their associated categories.
-/// It interacts with the CategoryRepository and ItemRepository to retrieve the data and provides a method to execute the use case.
-public struct GetSortedItemsUseCase {
+/// The GetSortedClassifiedAdsUseCase is a  responsible for fetching the listing of classified ads and their associated categories.
+/// It interacts with the CategoryRepository and ClassifiedAdRepository to retrieve the data and provides a method to execute the use case.
+public struct GetSortedClassifiedAdsUseCase {
     
     private let categoryRepository: any CategoryRepository
     
-    private let itemRepository: any ItemRepository
+    private let classifiedAdRepository: any ClassifiedAdRepository
     
     init(
         categoryRepository: any CategoryRepository,
-        itemRepository: any ItemRepository
+        classifiedAdRepository: any ClassifiedAdRepository
     ) {
         self.categoryRepository = categoryRepository
-        self.itemRepository = itemRepository
+        self.classifiedAdRepository = classifiedAdRepository
     }
     
     /// Executes the use case to fetch the listing of classified ads and their associated categories.
@@ -29,22 +29,22 @@ public struct GetSortedItemsUseCase {
     public func callAsFunction(
         categoryId: Int64?,
         forceRefresh: Bool
-    ) async throws -> [(item: Item, category: Category?)] {
-        async let items =  itemRepository.all(forceRefresh: forceRefresh)
+    ) async throws -> [(classifiedAd: ClassifiedAd, category: Category?)] {
+        async let classifiedAds =  classifiedAdRepository.all(forceRefresh: forceRefresh)
         async let categories = categoryRepository.all(forceRefresh: false)
-        let results = try await (items: items, categories: categories)
+        let results = try await (classifiedAds: classifiedAds, categories: categories)
 
         if let categoryId,
            let category = results.categories.first(where: { $0.id == categoryId }) {
-            return results.items
+            return results.classifiedAds
                 .filter { $0.categoryId == categoryId }
                 .sorted(by: < )
                 .map { ($0, category) }
         } else {
-            return results.items
+            return results.classifiedAds
                 .sorted(by: < )
-                .map { item in
-                    (item, results.categories.first(where: { $0.id == item.categoryId }))
+                .map { ad in
+                    (ad, results.categories.first(where: { $0.id == ad.categoryId }))
                 }
         }
     }
