@@ -60,10 +60,7 @@ final class ClassifiedAdDetailViewController: UIViewController {
             }.store(in: &cancellables)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Layout
+    private func setupLayout() {
         var constraints: [NSLayoutConstraint] = []
         
         let scrollView = UIScrollView()
@@ -88,6 +85,11 @@ final class ClassifiedAdDetailViewController: UIViewController {
             wrappedView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupLayout()
 
         // View customization
         view.backgroundColor = .white
@@ -95,6 +97,7 @@ final class ClassifiedAdDetailViewController: UIViewController {
         
         bindings()
         
+        // We fetch data when the view appears UI event
         task?.cancel()
         task = Task {
             await viewModel.fetchItem(id: itemId)
