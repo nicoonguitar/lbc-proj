@@ -1,25 +1,25 @@
 import Foundation
 import Domain
 
-final class ItemRepositoryImpl: ItemRepository {
+final class ClassifiedAdRepositoryImpl: ClassifiedAdRepository {
     
     private let apiClient: APIClient
 
-    private let inMemoryCache: any InMemoryCache<Item>
+    private let inMemoryCache: any InMemoryCache<ClassifiedAd>
 
     init(
         apiClient: APIClient,
-        inMemoryCache: any InMemoryCache<Item>
+        inMemoryCache: any InMemoryCache<ClassifiedAd>
     ) {
         self.apiClient = apiClient
         self.inMemoryCache = inMemoryCache
     }
     
-    func all(forceRefresh: Bool) async throws -> Set<Domain.Item> {
+    func all(forceRefresh: Bool) async throws -> Set<Domain.ClassifiedAd> {
         let cached = await inMemoryCache.cache
         if cached.isEmpty || forceRefresh {
             let response = try await apiClient.items()
-            let models = response.compactMap { Domain.Item.build(from: $0) }
+            let models = response.compactMap { Domain.ClassifiedAd.build(from: $0) }
             await inMemoryCache.clean()
             await inMemoryCache.save(models)
             return await inMemoryCache.cache
@@ -28,7 +28,7 @@ final class ItemRepositoryImpl: ItemRepository {
         }
     }
     
-    func item(for id: Int64) async -> Domain.Item? {
+    func item(for id: Int64) async -> Domain.ClassifiedAd? {
         await inMemoryCache.cache
             .first(where: { $0.id == id })
     }

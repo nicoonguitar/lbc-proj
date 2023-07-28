@@ -19,10 +19,10 @@ public enum DataAssembly: Assembly {
         )
         
         serviceLocator.single(
-            (any ItemRepository).self,
-            instance: ItemRepositoryImpl(
+            (any ClassifiedAdRepository).self,
+            instance: ClassifiedAdRepositoryImpl(
                 apiClient: serviceLocator.get(),
-                inMemoryCache: ItemsInMemoryCache.shared
+                inMemoryCache: ClassifiedAdsInMemoryCache.shared
             )
         )
     }

@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-extension Item {
+extension ClassifiedAd {
     
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -10,8 +10,8 @@ extension Item {
     }()
     
     static func build(
-        from apiModel: ApiItem
-    ) -> Item? {
+        from apiModel: ApiClassifiedAd
+    ) -> ClassifiedAd? {
         guard let creationDate = dateFormatter.date(from: apiModel.creationDate) else {
             return nil
         }

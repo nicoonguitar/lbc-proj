@@ -40,7 +40,7 @@ final class APIClientImpl: APIClient {
         try await request(url: URL.buildCategoriesURL())
     }
     
-    func items() async throws -> [ApiItem] {
+    func items() async throws -> [ApiClassifiedAd] {
         try await request(url: URL.buildItemsURL())
     }
 }
