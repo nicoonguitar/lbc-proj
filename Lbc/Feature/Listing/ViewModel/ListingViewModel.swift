@@ -32,7 +32,10 @@ final class ListingViewModel {
     }
     
     @Published @MainActor
-    private(set) var content: ContentState = .idle
+    private(set) var adsContent: ContentState = .idle
+    
+    @Published @MainActor
+    private(set) var categoriesContent: ContentState = .idle
     
     @Published @MainActor
     private(set) var navigationAction: MainCoordinator.NavigationAction?
@@ -50,7 +53,7 @@ final class ListingViewModel {
     @MainActor
     func fetchClassifiedAds(forceRefresh: Bool = true) async {
         do {
-            self.content = .fetching
+            self.adsContent = .fetching
             
             self.items = try await getSortedItemsUseCase(
                 categoryId: selectedCategory?.id,
@@ -59,23 +62,27 @@ final class ListingViewModel {
                 .build(from: $0.item, category: $0.category)
             }
             
-            self.content = self.items.isEmpty ? .noContent : .idle
+            self.adsContent = self.items.isEmpty ? .noContent : .idle
             
         } catch {
-            self.content = .error(error.localizedDescription)
+            self.adsContent = .error(error.localizedDescription)
         }
     }
 
     @MainActor
     func onFetchCategories() async {
         do {
+            self.categoriesContent = .fetching
+
             self.categories = try await getCategoriesUseCase(forceRefresh: true)
                 .map {
                     .init(id: $0.id, name: $0.name)
                 }
+            
+            self.categoriesContent = self.items.isEmpty ? .noContent : .idle
+
         } catch {
-            // TODO: handle error
-            print(error.localizedDescription)
+            self.categoriesContent = .error(error.localizedDescription)
         }
     }
     

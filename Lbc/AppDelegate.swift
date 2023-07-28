@@ -26,6 +26,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         coordinator?.start()
         window.rootViewController = coordinator?.navigationController
         window.makeKeyAndVisible()
+        // Disables dark mode
+        window.overrideUserInterfaceStyle = .light
         return true
     }
 }

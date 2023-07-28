@@ -58,13 +58,7 @@ final class ListingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // View customization
-        title = "Listing"
-        view.backgroundColor = .white
-        
-        // Layout
+    private func setupLayout() {
         var constraints: [NSLayoutConstraint] = []
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -75,6 +69,10 @@ final class ListingViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func setupNavigationBar() {
+        title = "Listing"
 
         // Filter bar button item setup
         navigationItem.rightBarButtonItem = fillableBarButtonItem
@@ -82,16 +80,19 @@ final class ListingViewController: UIViewController {
         fillableBarButtonItem.primaryAction = .init() { [weak self] _ in
             self?.viewModel.onFilter()
         }
-        
-        // Collection view setup
+    }
+    
+    private func setupCollectionView() {
         collectionView.register(
             ListingCollectionViewCell.self,
             forCellWithReuseIdentifier: ListingCollectionViewCell.reuseIdentifier
         )
         collectionView.dataSource = self
         collectionView.delegate = self
-
-        // Pull to refresh
+    }
+    
+    
+    private func setupPullToRefresh() {
         let action = UIAction { [weak self] _ in
             self?.task?.cancel()
             self?.task = Task {
@@ -100,8 +101,18 @@ final class ListingViewController: UIViewController {
         }
         refreshControl.addAction(action, for: .valueChanged)
         collectionView.refreshControl = refreshControl
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // View customization
+        view.backgroundColor = .white
         
-        bindings()
+        setupLayout()
+        setupNavigationBar()
+        setupCollectionView()
+        setupPullToRefresh()
+        setupBindings()
         
         // We fetch data when the view appears UI event
         task?.cancel()
@@ -119,7 +130,7 @@ final class ListingViewController: UIViewController {
         )
     }
     
-    private func bindings() {
+    private func setupBindings() {
         viewModel.$items
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -127,7 +138,7 @@ final class ListingViewController: UIViewController {
                 self?.refreshControl.endRefreshing()
             }.store(in: &cancellables)
         
-        viewModel.$content
+        viewModel.$adsContent
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let self else { return }
@@ -184,10 +195,3 @@ extension ListingViewController: UICollectionViewDelegate {
         viewModel.onItemSelection(at: indexPath)
     }
 }
-
-/*
- Disable dark mode
- 
- Screen rotation ?
- */
-

@@ -1,7 +1,6 @@
 import Foundation
 import Domain
 
-@globalActor
 actor ItemsInMemoryCache: InMemoryCache {
     
     static let shared = ItemsInMemoryCache()

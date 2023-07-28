@@ -20,7 +20,8 @@ final class ClassifiedAdDetailViewModel {
                 category: result.category
             )
         } else {
-            // TODO: handle error
+            // As we fetch data from the same source (listings json) deterministically we'll find associated data
+            // for the given ID in the cache. If instead we could call an server API, then we could manage and display errors.
         }
     }
 }

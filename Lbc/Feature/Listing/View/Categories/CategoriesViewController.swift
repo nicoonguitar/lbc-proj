@@ -22,7 +22,14 @@ final class CategoriesViewController: UITableViewController {
         view.tintColor = .orange
         return view
     }()
-
+    
+    private var errorLabel: UILabel {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }
+    
     init(
         viewModel: ListingViewModel,
         coordinator: MainCoordinator?
@@ -49,6 +56,26 @@ final class CategoriesViewController: UITableViewController {
             .sink { [weak self] action in
                 guard let self, let action else { return }
                 self.coordinator?.onNavigationAction(action, origin: self)
+            }.store(in: &cancellables)
+        
+        viewModel.$adsContent
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                switch $0 {
+                case .idle:
+                    self.tableView.backgroundView = nil
+                case .fetching:
+                    self.refreshControl?.beginRefreshing()
+                case .noContent:
+                    let label = self.errorLabel
+                    label.text = "Empty results"
+                    self.tableView.backgroundView = label
+                case let .error(error):
+                    let label = self.errorLabel
+                    label.text = error
+                    self.tableView.backgroundView = label
+                }
             }.store(in: &cancellables)
     }
     
