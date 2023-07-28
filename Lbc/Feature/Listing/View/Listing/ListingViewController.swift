@@ -131,7 +131,7 @@ final class ListingViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.$items
+        viewModel.$classifiedAds
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
@@ -180,12 +180,12 @@ extension ListingViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.items.count
+        viewModel.classifiedAds.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListingCollectionViewCell.reuseIdentifier, for: indexPath) as! ListingCollectionViewCell
-        cell.set(model: viewModel.items[indexPath.row])
+        cell.set(model: viewModel.classifiedAds[indexPath.row])
         return cell
     }
 }

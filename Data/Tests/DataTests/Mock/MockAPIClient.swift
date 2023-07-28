@@ -11,7 +11,7 @@ final class MockAPIClient: APIClient {
         categories
     }
     
-    func items() async throws -> [ApiClassifiedAd] {
+    func classifiedAds() async throws -> [ApiClassifiedAd] {
         items
     }
 }

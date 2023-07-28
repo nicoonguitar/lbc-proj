@@ -28,7 +28,7 @@ extension ClassifiedAdDetailUIModel {
         return formatter
     }()
     
-    static func build(from model: Item, category: Domain.Category?) -> Self {
+    static func build(from model: ClassifiedAd, category: Domain.Category?) -> Self {
         .init(
             category: category?.name ?? "",
             creationDate: dateFormatter.string(from: model.creationDate),

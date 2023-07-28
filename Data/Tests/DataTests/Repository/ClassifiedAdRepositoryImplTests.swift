@@ -33,7 +33,7 @@ final class ClassifiedAdRepositoryImplTests: XCTestCase {
         return try JSONDecoder().decode([ApiClassifiedAd].self, from: jsonData)
     }
     
-    // MARK: - get all items
+    // MARK: - get all classifiedAds
     
     func testGetAllByForcingRefresh() async throws {
         // Given

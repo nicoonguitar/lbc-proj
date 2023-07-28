@@ -18,7 +18,7 @@ final class ClassifiedAdRepositoryImpl: ClassifiedAdRepository {
     func all(forceRefresh: Bool) async throws -> Set<Domain.ClassifiedAd> {
         let cached = await inMemoryCache.cache
         if cached.isEmpty || forceRefresh {
-            let response = try await apiClient.items()
+            let response = try await apiClient.classifiedAds()
             let models = response.compactMap { Domain.ClassifiedAd.build(from: $0) }
             await inMemoryCache.clean()
             await inMemoryCache.save(models)

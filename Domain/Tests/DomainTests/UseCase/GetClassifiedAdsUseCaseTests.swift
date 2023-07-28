@@ -34,7 +34,7 @@ final class GetClassifiedAdsUseCaseTests: XCTestCase {
         ]
     }
     
-    // MARK: - all items
+    // MARK: - all classifiedAds
     
     func testGetAllClassifiedAdsSortedNonUrgent() async throws {
         // Given
@@ -84,7 +84,7 @@ final class GetClassifiedAdsUseCaseTests: XCTestCase {
         XCTAssertEqual(result.map { $0.category?.id }, [itemD.categoryId, itemC.categoryId, itemB.categoryId, itemA.categoryId])
     }
     
-    // MARK: - filtered items by category
+    // MARK: - filtered classifiedAds by category
     
     func testGetFilteredClassifiedAdsSortedNonUrgent() async throws {
         // Given

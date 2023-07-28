@@ -2,21 +2,19 @@ import Foundation
 import Domain
 
 /// The ListingViewModel class is responsible for wiring the UI event, the business logic and resulting UI state related to a classified ads listing view and its content filtering via a given Category selection.
-/// It communicates with the various use cases (GetCategoriesUseCase, GetItemUseCase, and GetSortedItemsUseCase) to fetch data and update its internal UI state.
+/// It communicates with the various use cases (GetCategoriesUseCase, and GetSortedClassifiedAdsUseCase) to fetch data and update its internal UI state.
 /// The ViewModel also provides various methods to interact with the view and trigger navigation actions through the MainCoordinator.
 ///
 /// Note: The reason properties and functions of the ViewModel are annotated with @MainActor instead of the whole class is because doing so
 /// would make the ViewModel initializer async, which the Service Locator cannot manage.
 final class ListingViewModel {
-    
-    private let getItemUseCase: GetItemUseCase
-    
-    private let getSortedItemsUseCase: GetSortedItemsUseCase
+        
+    private let getSortedClassifiedAdsUseCase: GetSortedClassifiedAdsUseCase
     
     private let getCategoriesUseCase: GetCategoriesUseCase
     
     @Published @MainActor
-    private(set) var items: [ListingRowUIModel] = []
+    private(set) var classifiedAds: [ListingRowUIModel] = []
     
     @Published @MainActor
     private(set) var categories: [CategoryUIModel] = []
@@ -42,12 +40,10 @@ final class ListingViewModel {
     
     init(
         getCategoriesUseCase: GetCategoriesUseCase,
-        getItemUseCase: GetItemUseCase,
-        getSortedItemsUseCase: GetSortedItemsUseCase
+        getSortedClassifiedAdsUseCase: GetSortedClassifiedAdsUseCase
     ) {
         self.getCategoriesUseCase = getCategoriesUseCase
-        self.getItemUseCase = getItemUseCase
-        self.getSortedItemsUseCase = getSortedItemsUseCase
+        self.getSortedClassifiedAdsUseCase = getSortedClassifiedAdsUseCase
     }
     
     @MainActor
@@ -55,14 +51,14 @@ final class ListingViewModel {
         do {
             self.adsContent = .fetching
             
-            self.items = try await getSortedItemsUseCase(
+            self.classifiedAds = try await getSortedClassifiedAdsUseCase(
                 categoryId: selectedCategory?.id,
                 forceRefresh: forceRefresh
             ).map {
-                .build(from: $0.item, category: $0.category)
+                .build(from: $0.classifiedAd, category: $0.category)
             }
             
-            self.adsContent = self.items.isEmpty ? .noContent : .idle
+            self.adsContent = self.classifiedAds.isEmpty ? .noContent : .idle
             
         } catch {
             self.adsContent = .error(error.localizedDescription)
@@ -79,7 +75,7 @@ final class ListingViewModel {
                     .init(id: $0.id, name: $0.name)
                 }
             
-            self.categoriesContent = self.items.isEmpty ? .noContent : .idle
+            self.categoriesContent = self.classifiedAds.isEmpty ? .noContent : .idle
 
         } catch {
             self.categoriesContent = .error(error.localizedDescription)
@@ -104,8 +100,8 @@ final class ListingViewModel {
     
     @MainActor
     func onItemSelection(at indexPath: IndexPath) {
-        guard indexPath.row < items.count else { return }
-        let id = items[indexPath.row].id
+        guard indexPath.row < classifiedAds.count else { return }
+        let id = classifiedAds[indexPath.row].id
         navigationAction = .showClassifiedAdDetail(id: id)
         navigationAction = nil
     }

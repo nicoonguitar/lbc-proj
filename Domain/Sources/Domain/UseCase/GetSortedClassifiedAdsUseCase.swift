@@ -17,10 +17,10 @@ public struct GetSortedClassifiedAdsUseCase {
     }
     
     /// Executes the use case to fetch the listing of classified ads and their associated categories.
-    /// The method provides an option to filter the items by a specific category ID and sorts them based on
+    /// The method provides an option to filter the classifiedAds by a specific category ID and sorts them based on
     /// two criteria: isUrgent and the creation date property in descending order.
     /// - Parameters:
-    ///   - categoryId: An optional parameter representing the category ID to filter the items. If nil, all items are returned without filtering by category.
+    ///   - categoryId: An optional parameter representing the category ID to filter the classifiedAds. If nil, all classifiedAds are returned without filtering by category.
     ///   - forceRefresh: A boolean flag indicating whether to force a refresh of data from the backend even if it exists in the cache.
     /// - Returns: An array of tuples, where each tuple contains a classified ad Item and an optional associated Category. The array is sorted in the following order:
     /// Classified ads with isUrgent set to true are placed at the beginning of the array.
